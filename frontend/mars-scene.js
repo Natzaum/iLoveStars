@@ -12,6 +12,11 @@ async function initMarsScene(containerElement) {
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     containerElement.appendChild(renderer.domElement);
 
+    const loading = document.createElement('div');
+    loading.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#ff9a66;font-size:12px;opacity:0.6';
+    loading.textContent = 'Loading...';
+    containerElement.appendChild(loading);
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
     camera.position.set(0, 0.1, 4.8);
@@ -28,9 +33,10 @@ async function initMarsScene(containerElement) {
     scene.add(fillLight);
 
     const textureBundle = await loadMarsTextures();
+    loading.remove();
 
     const mars = new THREE.Mesh(
-        new THREE.SphereGeometry(1.5, 128, 128),
+        new THREE.SphereGeometry(1.5, 32, 32),
         new THREE.MeshStandardMaterial({
             map: textureBundle.color,
             bumpMap: textureBundle.bump,
@@ -133,17 +139,37 @@ async function initMarsScene(containerElement) {
 }
 
 async function loadMarsTextures() {
-    const loader = new THREE.TextureLoader();
-
     try {
-        const colorTexture = await loader.loadAsync('../images/mars-texture.jpg');
-        prepareTexture(colorTexture);
+        const response = await fetch('../images/mars-texture.jpg');
+        const blob = await response.blob();
+
+        const bitmap = await createImageBitmap(blob, {
+            resizeWidth: 2048,
+            resizeHeight: 1024,
+            resizeQuality: 'high'
+        });
+
+        const canvas = document.createElement('canvas');
+        canvas.width = 2048;
+        canvas.height = 1024;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(bitmap, 0, 0);
+        bitmap.close();
+
+        const colorTexture = new THREE.CanvasTexture(canvas);
+        colorTexture.colorSpace = THREE.SRGBColorSpace;
+        colorTexture.anisotropy = 8;
+        colorTexture.wrapS = THREE.RepeatWrapping;
+        colorTexture.wrapT = THREE.ClampToEdgeWrapping;
+
+        const imageData = ctx.getImageData(0, 0, 2048, 1024);
 
         return {
             color: colorTexture,
-            bump: buildHeightTextureFromImage(colorTexture.image),
-            roughness: buildRoughnessTextureFromImage(colorTexture.image)
+            bump: buildHeightTextureFromImageData(imageData),
+            roughness: buildRoughnessTextureFromImageData(imageData)
         };
+
     } catch (error) {
         console.warn('Mars texture could not be loaded, using procedural fallback.', error);
         return buildFallbackMarsTextures();
@@ -157,54 +183,54 @@ function prepareTexture(texture) {
     texture.wrapT = THREE.ClampToEdgeWrapping;
 }
 
-function buildHeightTextureFromImage(image) {
+function buildHeightTextureFromImageData(imageData) {
     const canvas = document.createElement('canvas');
-    canvas.width = image.width;
-    canvas.height = image.height;
+    canvas.width = imageData.width;
+    canvas.height = imageData.height;
     const ctx = canvas.getContext('2d');
 
-    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const { data } = imageData;
+    const copy = new ImageData(
+        new Uint8ClampedArray(imageData.data),
+        imageData.width,
+        imageData.height
+    );
+    const { data } = copy;
 
     for (let i = 0; i < data.length; i += 4) {
-        const luminance = (data[i] * 0.299) + (data[i + 1] * 0.587) + (data[i + 2] * 0.114);
-        const adjusted = Math.max(58, Math.min(210, luminance * 0.88 + 22));
-        data[i] = adjusted;
-        data[i + 1] = adjusted;
-        data[i + 2] = adjusted;
+        const lum = (data[i] * 0.299) + (data[i + 1] * 0.587) + (data[i + 2] * 0.114);
+        const v = Math.max(58, Math.min(210, lum * 0.88 + 22));
+        data[i] = data[i + 1] = data[i + 2] = v;
         data[i + 3] = 255;
     }
 
-    ctx.putImageData(imageData, 0, 0);
-
+    ctx.putImageData(copy, 0, 0);
     const texture = new THREE.CanvasTexture(canvas);
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.ClampToEdgeWrapping;
     return texture;
 }
 
-function buildRoughnessTextureFromImage(image) {
+function buildRoughnessTextureFromImageData(imageData) {
     const canvas = document.createElement('canvas');
-    canvas.width = image.width;
-    canvas.height = image.height;
+    canvas.width = imageData.width;
+    canvas.height = imageData.height;
     const ctx = canvas.getContext('2d');
 
-    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const { data } = imageData;
+    const copy = new ImageData(
+        new Uint8ClampedArray(imageData.data),
+        imageData.width,
+        imageData.height
+    );
+    const { data } = copy;
 
     for (let i = 0; i < data.length; i += 4) {
-        const luminance = (data[i] * 0.299) + (data[i + 1] * 0.587) + (data[i + 2] * 0.114);
-        const roughness = Math.max(170, Math.min(248, 255 - luminance * 0.35));
-        data[i] = roughness;
-        data[i + 1] = roughness;
-        data[i + 2] = roughness;
+        const lum = (data[i] * 0.299) + (data[i + 1] * 0.587) + (data[i + 2] * 0.114);
+        const v = Math.max(170, Math.min(248, 255 - lum * 0.35));
+        data[i] = data[i + 1] = data[i + 2] = v;
         data[i + 3] = 255;
     }
 
-    ctx.putImageData(imageData, 0, 0);
-
+    ctx.putImageData(copy, 0, 0);
     const texture = new THREE.CanvasTexture(canvas);
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.ClampToEdgeWrapping;
