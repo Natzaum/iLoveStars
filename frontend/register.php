@@ -31,19 +31,17 @@
 
                             <div class="col-12 mb-3">
                                 <label>Email</label>
-                                <input type="text" name="email" id="email" class="form-control glass-panel"
-                                    maxlength="100" required>
+                                <input type="text" name="email" id="email" class="form-control glass-panel">
                             </div>
                             <div class="col-12 mb-3">
                                 <label>Username</label>
-                                <input type="text" name="username" id="username" minlength="4" maxlength="100"
-                                    class="form-control glass-panel" required>
+                                <input type="text" name="username" id="username" class="form-control glass-panel">
                             </div>
                             <div class="col-12 mb-3">
                                 <label>Password</label>
                                 <div class="password-field">
                                     <input name="password" type="password" id="password"
-                                        class="form-control glass-panel" minlength="6" maxlength="100" required>
+                                        class="form-control glass-panel">
                                     <img id="visibility-on" src="../images/visibility_on.svg" alt="Show password"
                                         onclick="showPassword()">
                                 </div>
@@ -52,7 +50,7 @@
                                 <label>Repeat Password</label>
                                 <div class="password-field">
                                     <input name="repeat_password" type="password" id="repeat-password"
-                                        class="form-control glass-panel" required>
+                                        class="form-control glass-panel">
                                     <img id="visibility-on" src="../images/visibility_on.svg"
                                         alt="Show repeated password" onclick="showRepeatedPassword()">
                                 </div>

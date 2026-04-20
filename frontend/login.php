@@ -31,13 +31,13 @@
 
                             <div class="col-12 mb-3">
                                 <label>Email</label>
-                                <input name="email" class="form-control glass-panel" id="email" required>
+                                <input name="email" class="form-control glass-panel" id="email">
                             </div>
                             <div class="col-12 mb-3">
                                 <label>Password</label>
                                 <div class="password-field">
                                     <input name="password" type="password" id="password"
-                                        class="form-control glass-panel" required>
+                                        class="form-control glass-panel">
                                     <img id="visibility-on" src="../images/visibility_on.svg" alt="Show password"
                                         onclick="showPassword()">
                                 </div>

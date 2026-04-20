@@ -18,60 +18,8 @@ function showRepeatedPassword() {
     }
 }
 
-document.querySelector('form').addEventListener('submit', function (e) {
-    var password = document.getElementById('password').value
-    var repeatPassword = document.getElementById('repeat-password').value
-    if (password !== repeatPassword) {
-        e.preventDefault();
-        Swal.fire({
-            position: "center",
-            theme: "dark",
-            icon: "error",
-            title: "Password must be the same",
-            showConfirmButton: false,
-            timer: 1500
-        });
-    }
-
-    var email = document.getElementById('email').value
-    var username = document.getElementById('username').value
-
-    if (!email || !username || !password || !repeatPassword) {
-        e.preventDefault();
-        Swal.fire({
-            position: "center",
-            theme: "dark",
-            icon: "error",
-            title: "All fields are required",
-            showConfirmButton: false,
-            timer: 1500
-        });
-    }
-
-    if (username.length < 4 || username.length > 100) {
-        e.preventDefault()
-        Swal.fire({
-            position: "center",
-            theme: "dark",
-            icon: "error",
-            title: "Username must have at least 4 characters and a max of 100",
-            showConfirmButton: false,
-            timer: 1500
-        });
-    }
-
-    if (password.length < 6 || username.length > 100) {
-        e.preventDefault()
-        Swal.fire({
-            position: "center",
-            theme: "dark",
-            icon: "error",
-            title: "Password must have at least 6 characters and a max of 100",
-            showConfirmButton: false,
-            timer: 1500
-        });
-    }
-});
+const urlParams = new URLSearchParams(window.location.search)
+const error = urlParams.get('error')
 
 if (window.location.search.includes('success=1')) {
     Swal.fire({
@@ -80,6 +28,17 @@ if (window.location.search.includes('success=1')) {
         icon: "success",
         title: "Your user has successfully registered",
         showConfirmButton: false,
-        timer: 1500
+        timer: 2500
+    });
+}
+
+if (error) {
+    Swal.fire({
+        position: "center",
+        theme: "dark",
+        icon: "error",
+        title: error,
+        showConfirmButton: false,
+        timer: 2500
     });
 }

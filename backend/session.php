@@ -28,7 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
 
     } catch (Exception $e) {
-        echo $e->getMessage();
+        header("Location: ../frontend/login.php?error=" . urlencode($e->getMessage()));
+        exit;
     }
 }
 ?>

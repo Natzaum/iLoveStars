@@ -4,9 +4,9 @@ services:
     container_name: mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: movies
-      MYSQL_DATABASE: movie_db
-      MYSQL_USER: movies
+      MYSQL_ROOT_PASSWORD: stars
+      MYSQL_DATABASE: stars_db
+      MYSQL_USER: star
       MYSQL_PASSWORD: lebiloide67
     ports:
       - "3306:3306"
