@@ -2,13 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iLoveStars</title>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+    <?php include 'includes/head.php' ?>
 </head>
 
 <body>
@@ -64,7 +58,7 @@
                         <div class="card-footer text-center">
                             <input type="submit" href="#" class="register-link mb-3" value="Register">
                             <p>or</p>
-                            <a href="../frontend/login.html" class="login-link">Login</a>
+                            <a href="../frontend/login.php" class="login-link">Login</a>
                         </div>
                     </form>
                 </div>
@@ -77,40 +71,4 @@
 
 </html>
 
-<script>
-    function showPassword() {
-        var password = document.getElementById('password')
-
-        if (password.type === 'password') {
-            password.type = 'text'
-        } else {
-            password.type = 'password'
-        }
-    }
-
-    function showRepeatedPassword() {
-        var repeatPassword = document.getElementById('repeat-password')
-
-        if (repeatPassword.type === 'password') {
-            repeatPassword.type = 'text'
-        } else {
-            repeatPassword.type = 'password'
-        }
-    }
-
-    document.querySelector('form').addEventListener('submit', function (e) {
-        var password = document.getElementById('password').value;
-        var repeatPassword = document.getElementById('repeat-password').value;
-        if (password !== repeatPassword) {
-            e.preventDefault();
-            Swal.fire({
-                position: "center",
-                theme: "dark",
-                icon: "error",
-                title: "Password must be the same",
-                showConfirmButton: false,
-                timer: 1500
-            });
-        }
-    });
-</script>
+<script src="includes/scripts.js"></script>

@@ -2,13 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iLoveStars</title>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+    <?php include 'includes/head.php' ?>
 </head>
 
 <body>
@@ -50,7 +44,7 @@
                         <div class="card-footer text-center">
                             <input type="submit" href="#" class="register-link mb-3" value="Login">
                             <p>or</p>
-                            <a href="../frontend/register.html" class="login-link">Register</a>
+                            <a href="../frontend/register.php" class="login-link">Register</a>
                         </div>
                     </form>
                 </div>
@@ -63,25 +57,4 @@
 
 </html>
 
-<script>
-    function showPassword() {
-        var password = document.getElementById('password')
-
-        if (password.type === 'password') {
-            password.type = 'text'
-        } else {
-            password.type = 'password'
-        }
-    }
-
-    if (window.location.search.includes('success=1')) {
-        Swal.fire({
-            position: "center",
-            theme: "dark",
-            icon: "success",
-            title: "Your user has successfully registered",
-            showConfirmButton: false,
-            timer: 1500
-        });
-    }
-</script>
+<script src="includes/scripts.js"></script>
