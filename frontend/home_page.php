@@ -1,3 +1,14 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../frontend/login.php');
+    exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +18,7 @@
 
 <body>
     <div class="container-fluid">
-        <h3>welcome</h3>
+        <h3>welcome <?php echo $_SESSION['username'] ?></h3>
     </div>
 </body>
 
