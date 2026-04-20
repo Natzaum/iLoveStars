@@ -3,6 +3,7 @@
 
 <head>
     <?php include 'includes/head.php' ?>
+    <link href="styles.css" rel="stylesheet">
 </head>
 
 <body>
@@ -22,7 +23,7 @@
 
             <div class="col-12 col-md-6 col-lg-3 login-column">
                 <div class="card shadow glass-panel-login p-3">
-                    <form action="../backend/register.php">
+                    <form method="post" action="../backend/session.php">
                         <div class="card-header mb-3 text-center">
                             <h3>Search for Stars</h3>
                         </div>
@@ -52,7 +53,7 @@
         </div>
     </div>
 
-    <script type="module" src="mars-scene.js"></script>
+    <script type="module" src="includes/mars-scene.js"></script>
 </body>
 
 </html>

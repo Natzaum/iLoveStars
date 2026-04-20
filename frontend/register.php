@@ -3,6 +3,7 @@
 
 <head>
     <?php include 'includes/head.php' ?>
+    <link href="styles.css" rel="stylesheet">
 </head>
 
 <body>
@@ -30,18 +31,19 @@
 
                             <div class="col-12 mb-3">
                                 <label>Email</label>
-                                <input type="text" name="email" id="email" class="form-control glass-panel" required>
+                                <input type="text" name="email" id="email" class="form-control glass-panel"
+                                    maxlength="100" required>
                             </div>
                             <div class="col-12 mb-3">
                                 <label>Username</label>
-                                <input type="text" name="username" id="username" class="form-control glass-panel"
-                                    required>
+                                <input type="text" name="username" id="username" minlength="4" maxlength="100"
+                                    class="form-control glass-panel" required>
                             </div>
                             <div class="col-12 mb-3">
                                 <label>Password</label>
                                 <div class="password-field">
                                     <input name="password" type="password" id="password"
-                                        class="form-control glass-panel" required>
+                                        class="form-control glass-panel" minlength="6" maxlength="100" required>
                                     <img id="visibility-on" src="../images/visibility_on.svg" alt="Show password"
                                         onclick="showPassword()">
                                 </div>
@@ -67,7 +69,7 @@
         </div>
     </div>
 
-    <script type="module" src="mars-scene.js"></script>
+    <script type="module" src="includes/mars-scene.js"></script>
 </body>
 
 </html>

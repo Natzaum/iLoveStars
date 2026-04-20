@@ -47,6 +47,30 @@ document.querySelector('form').addEventListener('submit', function (e) {
             timer: 1500
         });
     }
+
+    if (username.length < 4 || username.length > 100) {
+        e.preventDefault()
+        Swal.fire({
+            position: "center",
+            theme: "dark",
+            icon: "error",
+            title: "Username must have at least 4 characters and a max of 100",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
+
+    if (password.length < 6 || username.length > 100) {
+        e.preventDefault()
+        Swal.fire({
+            position: "center",
+            theme: "dark",
+            icon: "error",
+            title: "Password must have at least 6 characters and a max of 100",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
 });
 
 if (window.location.search.includes('success=1')) {

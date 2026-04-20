@@ -1,15 +1,6 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->load();
-
-$db_host = $_ENV['DB_HOST'] ?? '';
-$db_user = $_ENV['DB_USER'] ?? '';
-$db_password = $_ENV['DB_PASSWORD'] ?? '';
-$db_name = $_ENV['DB_NAME'] ?? '';
-
-$conn = mysqli_connect($db_host, $db_user, $db_password, $db_name);
+require 'connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
@@ -29,6 +20,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!$email || !$username || !$password) {
             throw new Exception("All fields are needed");
         }
+        if (strlen($username) < 4 || strlen($username) > 100) {
+            throw new Exception("Invalid username");
+        }
+        if (strlen($password) < 6 || strlen($password) > 100) {
+            throw new Exception("Invalid password");
+        }
 
         $register_user_query = mysqli_prepare($conn, 'INSERT INTO users (email, username, password) 
     VALUES (?, ?, ?)');
@@ -42,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         mysqli_commit($conn);
         echo "Register successfully";
-        header("Location: ../frontend/login.html?success=1");
+        header("Location: ../frontend/login.php?success=1");
 
     } catch (Exception $e) {
         mysqli_rollback($conn);
