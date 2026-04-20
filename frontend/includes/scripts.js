@@ -19,8 +19,8 @@ function showRepeatedPassword() {
 }
 
 document.querySelector('form').addEventListener('submit', function (e) {
-    var password = document.getElementById('password').value;
-    var repeatPassword = document.getElementById('repeat-password').value;
+    var password = document.getElementById('password').value
+    var repeatPassword = document.getElementById('repeat-password').value
     if (password !== repeatPassword) {
         e.preventDefault();
         Swal.fire({
@@ -28,6 +28,21 @@ document.querySelector('form').addEventListener('submit', function (e) {
             theme: "dark",
             icon: "error",
             title: "Password must be the same",
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
+
+    var email = document.getElementById('email').value
+    var username = document.getElementById('username').value
+
+    if (!email || !username || !password || !repeatPassword) {
+        e.preventDefault();
+        Swal.fire({
+            position: "center",
+            theme: "dark",
+            icon: "error",
+            title: "All fields are required",
             showConfirmButton: false,
             timer: 1500
         });

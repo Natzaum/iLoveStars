@@ -30,7 +30,7 @@
 
                             <div class="col-12 mb-3">
                                 <label>Email</label>
-                                <input class="form-control glass-panel" required>
+                                <input class="form-control glass-panel" id="email" required>
                             </div>
                             <div class="col-12 mb-3">
                                 <label>Password</label>

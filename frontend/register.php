@@ -30,11 +30,12 @@
 
                             <div class="col-12 mb-3">
                                 <label>Email</label>
-                                <input type="text" name="email" class="form-control glass-panel" required>
+                                <input type="text" name="email" id="email" class="form-control glass-panel" required>
                             </div>
                             <div class="col-12 mb-3">
                                 <label>Username</label>
-                                <input type="text" name="username" class="form-control glass-panel" required>
+                                <input type="text" name="username" id="username" class="form-control glass-panel"
+                                    required>
                             </div>
                             <div class="col-12 mb-3">
                                 <label>Password</label>
